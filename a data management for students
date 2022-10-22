@@ -1,0 +1,124 @@
+
+/*Program to make student database*/
+ 
+#include <iostream>
+#include<string.h>
+using namespace std;
+ class student
+{
+   public:
+      int rno;
+      char clas[10];
+      int srno;
+      long int tele;
+      char name[10];
+      char bloodgrp[5];
+      char div;
+      char DOB[10];
+      static int count; //static data variable
+      void getdata();
+      friend void display(student &obj);
+ 
+      student()         //constructor
+      {
+            rno=0;
+            cout <<"\t Constructor\n";
+            rno=count;
+            count++;
+      }
+     ~student()          //destructor
+      {
+            cout<<"\n Destructor";
+            cout<<"\n Destroying the object";
+            count++;
+      }
+      static void getcount()         //static member function- can only access static members
+      {
+      cout<<"Constructor count is "<<count<<endl;
+      }
+ 
+      student (student & obj)  //copy constructor is a member function that                                         //initializes an object using another object of same class 
+                         //ClassName (ClassName &old_obj); 
+ 
+      
+      {
+          rno=obj.rno;
+           strcpy(name,obj.name);
+      strcpy(DOB,obj.DOB);
+      strcpy(clas,obj.clas);
+      strcpy(bloodgrp,obj.bloodgrp);
+          div=obj.div;
+        tele=obj.tele;
+           srno=count;
+            count++;
+      }
+};//end of class
+ 
+      int student::count=0;      //static varriable default declaration
+      void student::getdata()
+      {
+      cout<<"\n"<<"enter rno:";
+            cin>>rno;
+      cout<<"\n"<<"enter name:";
+            cin>>name;
+      cout<<"\n"<<"enter DOB:";
+            cin>>DOB;
+      cout<<"\n"<<"enter blood group:";
+        cin>>bloodgrp;
+      cout<<"\n"<<"enter class:";
+            cin>>clas;
+      cout<<"\n"<<"enter division:";
+            cin>>div;
+      cout<<"\n"<<"enter the telephone no:";
+            cin>>tele;
+      }
+      void display(student & obj)  //friend function
+       {
+      cout<<"\n"<<obj.rno;
+      cout<<"\t"<<obj.name;
+            cout<<"\t "<<obj.DOB;
+      cout<<"\t"<<obj.bloodgrp;
+            cout<<"\t "<<obj.clas;
+      cout<<"\t"<<obj.div;
+      cout<<"\t"<<obj.tele<<endl;
+      }
+ int main()
+ {
+      student s1;
+ 
+      student s2(s1);      //copy constructor
+ 
+    student:: getcount(); //accessing static function
+ 
+     cout<<"\nAll the details are as below:\n";
+       cout<<"ROLL \t NAME \t DOB \t BLOODGRP \t CLASS \t DIV\t PHONE \n";
+  //    display(s1);
+ 
+      student *s[50]; //array of objects
+      int i,n;
+      cout<<"\nHow many student objects do you want to create?";
+      cin>>n;
+ 
+  for(i=0;i<n;i++)
+        {
+            s[i]=new student();  //dynamic memory allocation operator
+        }
+ 
+  for(i=0;i<n;i++)
+      {
+            s[i]-> getdata();
+      }
+  for(i=0;i<n;i++)
+      {
+      display(*s[i]);
+      }
+      student:: getcount(); //accessing static function
+  for(i=0;i<n;i++)
+      {
+            delete (s[i]);  //dynamic memory de-allocation operator
+      }
+      
+      
+  return 0;
+}
+
